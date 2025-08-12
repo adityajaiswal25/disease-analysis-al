@@ -70,5 +70,8 @@ st.markdown("---")
 st.markdown("""
 <div style='text-align: center; color: #666; font-size: 14px;'>
     <p>⚠️ This tool provides health information and is not a substitute for professional medical advice</p>
+    <p style='margin-top:10px;'>
+        ❤️ Made with love by Aditya Jaiswal
+    </p>
 </div>
 """ , unsafe_allow_html=True)
