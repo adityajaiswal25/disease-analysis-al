@@ -2,6 +2,11 @@
 
 A comprehensive AI-powered disease analysis application with separate pages for different health analysis features.
 
+> **👨‍💻 Developed & Designed by [Aditya Jaiswal](https://www.linkedin.com/in/adityajaiswal25)**  
+> *Final Year B.Tech (CSAI) | Python Developer | Cloud Computing Enthusiast | Noida, India*
+
+
+
 ## 🚀 Features
 
 - **🔍 Symptom-Based Prediction** - Get disease predictions based on symptoms
