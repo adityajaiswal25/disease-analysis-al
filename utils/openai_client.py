@@ -1,18 +1,50 @@
 import os
 from openai import OpenAI
+import streamlit as st
 
 def get_openai_client():
-    """Initialize and return OpenAI client"""
-    api_key = os.getenv('OPENAI_API_KEY')
+    """Initialize and return OpenAI client with multiple fallback options"""
     
+    api_key = None
+    
+    # Method 1: Try Streamlit secrets first
+    if hasattr(st, 'secrets'):
+        try:
+            api_key = st.secrets.get("OPENAI_API_KEY")
+        except:
+            pass
+    
+    # Method 2: Try environment variable
     if not api_key:
-        # For development/testing - replace with your actual key
-        api_key = os.getenv('OPENAI_API_KEY_DEV')
+        api_key = os.getenv("OPENAI_API_KEY")
+    
+    # Method 3: Try .env file
+    if not api_key:
+        try:
+            from dotenv import load_dotenv
+            load_dotenv()
+            api_key = os.getenv("OPENAI_API_KEY")
+        except ImportError:
+            pass
     
     if api_key:
         return OpenAI(api_key=api_key)
     else:
-        print("Warning: OpenAI API key not found. Please set OPENAI_API_KEY environment variable.")
+        # Enhanced error message with clear instructions
+        error_msg = """
+        ❌ OpenAI API Key Not Found!
+        
+        To fix this, please:
+        1. Get your API key from: https://platform.openai.com/api-keys
+        2. Create a .env file in your project root with:
+           OPENAI_API_KEY=your-actual-key-here
+        3. Or set the environment variable:
+           Windows: set OPENAI_API_KEY=your-key
+           Linux/Mac: export OPENAI_API_KEY=your-key
+        
+        For Streamlit Cloud, add the key in Settings > Secrets
+        """
+        st.error(error_msg) if hasattr(st, 'error') else print(error_msg)
         return None
 
 def try_parse_json(text):
